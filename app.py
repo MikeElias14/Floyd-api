@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 
 def create_app(test_config=None):
@@ -14,4 +15,5 @@ def create_app(test_config=None):
 
 
 app = create_app()
+CORS(app)
 app.run(debug=True)
