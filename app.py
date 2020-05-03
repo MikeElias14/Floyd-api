@@ -7,7 +7,7 @@ def create_app(test_config=None):
 
     # Create Routes
     # Detail
-    from api.v1.detail_api import detail_bp
+    from api.v1.holding_api import detail_bp
     _app.register_blueprint(detail_bp)
 
     return _app
