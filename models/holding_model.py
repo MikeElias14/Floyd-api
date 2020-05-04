@@ -64,3 +64,10 @@ unused_info = [
     'volumeAllCurrencies',
     'zip',
 ]
+
+unused_history = [
+    'Open',
+    'High',
+    'Low',
+    'Volume'
+]

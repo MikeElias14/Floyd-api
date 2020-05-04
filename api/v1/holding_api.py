@@ -33,3 +33,18 @@ def get_div():
         code = 400
 
     return jsonify(result), code
+
+
+# Get ticker price history
+@detail_bp.route('history', methods=["GET"])
+def get_history():
+    ticker = request.args.get('ticker') or None
+
+    if ticker is not None:
+        result = controller.get_history(ticker)
+        code = 200
+    else:
+        result = 'No Ticker'
+        code = 400
+
+    return jsonify(result), code
