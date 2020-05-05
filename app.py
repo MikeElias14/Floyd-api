@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_cors import CORS
+import logging
 
 
-def create_app(test_config=None):
+def create_app():
     # create and configure the app
     _app = Flask(__name__, instance_relative_config=True)
+    CORS(_app)
 
     # Create Routes
     # Detail
@@ -15,5 +17,4 @@ def create_app(test_config=None):
 
 
 app = create_app()
-CORS(app)
 app.run(debug=True)
