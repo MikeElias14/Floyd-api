@@ -8,10 +8,17 @@ detail_bp = Blueprint('detail', __name__, url_prefix='/holding')
 @detail_bp.route('info', methods=["GET"])
 def get_info():
     tickers = request.args.get('tickers') or None
+    index = request.args.get('index') or False
+
+    if index == 'true':
+        index = True
+
+    if index == 'false':
+        index = False
 
     if tickers is not None:
         tickers = tickers.split(',')
-        result = controller.get_info(tickers)
+        result = controller.get_info(tickers, index=index)
         code = 200
     else:
         result = 'No Ticker'

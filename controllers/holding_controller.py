@@ -1,8 +1,8 @@
 import yfinance as yf
-from models.holding_model import unused_info, unused_history
+from models.holding_model import unused_info, unused_history, unused_index_info
 
 
-def get_info(tickers):
+def get_info(tickers, index=False):
     info = []
     for ticker in tickers:
         yf_ticker = yf.Ticker(ticker)
@@ -14,7 +14,12 @@ def get_info(tickers):
             break
 
         # Get rid of things I don't currently use
-        for field in unused_info:
+        if index:
+            remove_info = unused_index_info
+        else:
+            remove_info = unused_info
+
+        for field in remove_info:
             if field in ticker_info:
                 ticker_info.pop(field)
         info.append(dict(ticker=ticker, info=ticker_info))
