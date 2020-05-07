@@ -30,10 +30,27 @@ def get_info():
 # Get ticker dividend history
 @detail_bp.route('div', methods=["GET"])
 def get_div():
-    ticker = request.args.get('ticker') or None
+    tickers = request.args.get('tickers') or None
 
-    if ticker is not None:
-        result = controller.get_div(ticker)
+    if tickers is not None:
+        tickers = tickers.split(',')
+        result = controller.get_div(tickers)
+        code = 200
+    else:
+        result = 'No Ticker'
+        code = 400
+
+    return jsonify(result), code
+
+
+# Get ticker dividend history
+@detail_bp.route('events', methods=["GET"])
+def get_events():
+    tickers = request.args.get('tickers') or None
+
+    if tickers is not None:
+        tickers = tickers.split(',')
+        result = controller.get_events(tickers)
         code = 200
     else:
         result = 'No Ticker'

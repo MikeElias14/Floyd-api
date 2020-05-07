@@ -27,9 +27,37 @@ def get_info(tickers, index=False):
     return info
 
 
-def get_div(ticker):
-    ticker = yf.Ticker(ticker)
-    return ticker.dividends.to_json()
+def get_div(tickers):
+    divideds = []
+    for ticker in tickers:
+        yf_ticker = yf.Ticker(ticker)
+        try:
+            ticker_div = yf_ticker.dividends.to_dict()
+        except:
+            ticker_div = "Bug"  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
+            divideds.append(dict(ticker=ticker, div=ticker_div))
+            break
+
+        dict_div = []
+        for obj in ticker_div:
+            dict_div.append({obj.strftime('%Y/%m/%d'): ticker_div[obj]})
+        divideds.append(dict(ticker=ticker, div=dict_div))
+
+    return divideds
+
+
+def get_events(tickers):
+    events = []
+    for ticker in tickers:
+        yf_ticker = yf.Ticker(ticker)
+        try:
+            ticker_events = yf_ticker.calendar.to_dict()
+        except:
+            ticker_events = "Bug"  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
+
+        events.append(dict(ticker=ticker, events=ticker_events))
+
+    return events
 
 
 def get_history(tickers, time, interval):
