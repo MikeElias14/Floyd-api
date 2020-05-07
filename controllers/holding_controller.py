@@ -22,7 +22,7 @@ def get_info(tickers, index=False):
             info.append(dict(ticker=ticker, info=ticker_info))
 
         except:
-            ticker_info = "Bug"  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
+            ticker_info = [dict(bug=1)]  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
             info.append(dict(ticker=ticker, info=ticker_info))
 
     return info
@@ -56,7 +56,7 @@ def get_events(tickers):
             ticker_events = yf_ticker.calendar.to_dict()
 
         except:
-            ticker_events = "Bug"  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
+            ticker_events = [dict(bug=1)]  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
 
         events.append(dict(ticker=ticker, events=ticker_events))
 
@@ -81,7 +81,7 @@ def get_history(tickers, time, interval):
             tickers_history.append(dict(ticker=ticker, history=ticker_history))
 
         except:
-            history = "Bug"  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
+            history = [dict(bug=1)]  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
             tickers_history.append(dict(ticker=ticker, history=history))
 
     return tickers_history
