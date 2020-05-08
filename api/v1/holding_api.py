@@ -8,10 +8,17 @@ detail_bp = Blueprint('detail', __name__, url_prefix='/holding')
 @detail_bp.route('info', methods=["GET"])
 def get_info():
     tickers = request.args.get('tickers') or None
+    index = request.args.get('index') or False
+
+    if index == 'true':
+        index = True
+
+    if index == 'false':
+        index = False
 
     if tickers is not None:
         tickers = tickers.split(',')
-        result = controller.get_info(tickers)
+        result = controller.get_info(tickers, index=index)
         code = 200
     else:
         result = 'No Ticker'
@@ -23,10 +30,27 @@ def get_info():
 # Get ticker dividend history
 @detail_bp.route('div', methods=["GET"])
 def get_div():
-    ticker = request.args.get('ticker') or None
+    tickers = request.args.get('tickers') or None
 
-    if ticker is not None:
-        result = controller.get_div(ticker)
+    if tickers is not None:
+        tickers = tickers.split(',')
+        result = controller.get_div(tickers)
+        code = 200
+    else:
+        result = 'No Ticker'
+        code = 400
+
+    return jsonify(result), code
+
+
+# Get ticker dividend history
+@detail_bp.route('events', methods=["GET"])
+def get_events():
+    tickers = request.args.get('tickers') or None
+
+    if tickers is not None:
+        tickers = tickers.split(',')
+        result = controller.get_events(tickers)
         code = 200
     else:
         result = 'No Ticker'
