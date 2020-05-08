@@ -22,7 +22,7 @@ def get_info(tickers, index=False):
             info.append(dict(ticker=ticker, info=ticker_info))
 
         except:
-            ticker_info = [dict(bug=1)]  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
+            ticker_info = dict()  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
             info.append(dict(ticker=ticker, info=ticker_info))
 
     return info
@@ -42,7 +42,7 @@ def get_div(tickers):
             divideds.append(dict(ticker=ticker, history=dict_div))
 
         except:
-            ticker_div = [dict(bug=1)]  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
+            ticker_div = []  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
             divideds.append(dict(ticker=ticker, history=ticker_div))
 
     return divideds
@@ -56,7 +56,7 @@ def get_events(tickers):
             ticker_events = yf_ticker.calendar.to_dict()
 
         except:
-            ticker_events = [dict(bug=1)]  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
+            ticker_events = dict()  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
 
         events.append(dict(ticker=ticker, events=ticker_events))
 
@@ -68,20 +68,15 @@ def get_history(tickers, time, interval):
     for ticker in tickers:
         yf_ticker = yf.Ticker(ticker)
 
-        try:
-            history = yf_ticker.history(period=time, interval=interval, prepost=False, actions=False).to_dict()
+        history = yf_ticker.history(period=time, interval=interval, prepost=False, actions=False).to_dict()
 
-            for field in unused_history:
-                if field in history:
-                    history.pop(field)
+        for field in unused_history:
+            if field in history:
+                history.pop(field)
 
-            ticker_history = []
-            for obj in history['Close']:
-                ticker_history.append({obj.strftime('%Y/%m/%d'): history['Close'][obj]})
-            tickers_history.append(dict(ticker=ticker, history=ticker_history))
-
-        except:
-            history = [dict(bug=1)]  # TODO: Fix this, https://github.com/ranaroussi/yfinance/issues/208
-            tickers_history.append(dict(ticker=ticker, history=history))
+        ticker_history = []
+        for obj in history['Close']:
+            ticker_history.append({obj.strftime('%Y/%m/%d'): history['Close'][obj]})
+        tickers_history.append(dict(ticker=ticker, history=ticker_history))
 
     return tickers_history
