@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 import controllers.holding_controller as controller
 
-detail_bp = Blueprint('detail', __name__, url_prefix='/holding')
+detail_bp = Blueprint('holdings', __name__, url_prefix='/holding')
 
 
 # Get tickers info
