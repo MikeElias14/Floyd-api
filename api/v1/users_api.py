@@ -20,12 +20,12 @@ def create_user():
 
 
 @users_bp.route('holdings', methods=["POST"])
-def add_user_holding():
+def add_user_holdings():
     user = request.args.get('user_id') or None
-    tickers = request.args.get('tickers') or None
+    holdings = request.args.get('holdings') or None  # Holdings of form [(ticker, amount)]
 
-    if user is not None and tickers is not None:
-        code, result = controller.add_user_holdings(user, tickers)
+    if user is not None and holdings is not None:
+        code, result = controller.add_user_holdings(user, holdings)
     else:
         result = "Name not given"
         code = 400

@@ -20,3 +20,17 @@ def holding_to_json(holding):
             name=holding.name
         )
     return result
+
+
+def user_holdings_to_json(user_holdings):
+    result = dict()
+    if user_holdings is not None:
+        for holding in user_holdings:
+            result[holding.id] = dict(
+                holding_id=holding.holding_id,
+                user_id=holding.user_id,
+                amount=holding.amount,
+                ticker=holding.ticker,
+                name=holding.name
+            )
+    return result
