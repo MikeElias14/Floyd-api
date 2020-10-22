@@ -1,11 +1,11 @@
 from flask import Blueprint, jsonify, request
 import controllers.holding_controller as controller
 
-detail_bp = Blueprint('holdings', __name__, url_prefix='/holding')
+holdings_bp = Blueprint('holdings', __name__, url_prefix='/holding')
 
 
 # Get tickers info
-@detail_bp.route('info', methods=["GET"])
+@holdings_bp.route('info', methods=["GET"])
 def get_info():
     tickers = request.args.get('tickers') or None
     index = request.args.get('index') or False
@@ -28,7 +28,7 @@ def get_info():
 
 
 # Get ticker dividend history
-@detail_bp.route('div', methods=["GET"])
+@holdings_bp.route('div', methods=["GET"])
 def get_div():
     tickers = request.args.get('tickers') or None
 
@@ -44,7 +44,7 @@ def get_div():
 
 
 # Get ticker dividend history
-@detail_bp.route('events', methods=["GET"])
+@holdings_bp.route('events', methods=["GET"])
 def get_events():
     tickers = request.args.get('tickers') or None
 
@@ -60,7 +60,7 @@ def get_events():
 
 
 # Get ticker price history
-@detail_bp.route('history', methods=["GET"])
+@holdings_bp.route('history', methods=["GET"])
 def get_history():
     tickers = request.args.get('tickers') or None
     time = request.args.get('time') or None

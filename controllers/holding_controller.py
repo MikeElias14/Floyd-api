@@ -1,5 +1,8 @@
 import yfinance as yf
 from models.holding_model import unused_info, unused_history, unused_index_info
+from extensions import db
+from models.model import Holdings
+from controllers.convert_json import user_to_json
 
 
 def get_info(tickers, index=False):
@@ -80,3 +83,10 @@ def get_history(tickers, time, interval):
         tickers_history.append(dict(ticker=ticker, history=ticker_history))
 
     return tickers_history
+
+
+# This gets the hodling from my db based on ticker
+def get_holding_by_ticker(ticker):
+    query = Holdings.query.filter(Holdings.ticker == ticker).first()
+    result = user_to_json(query)
+    return result

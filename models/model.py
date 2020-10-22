@@ -29,6 +29,7 @@ class UserHoldings(db.Model):
     id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
     user_id = db.Column(db.BigInteger, db.ForeignKey('users.id'), nullable=False)
     holding_id = db.Column(db.BigInteger, db.ForeignKey('holdings.id'), nullable=False)
+    amount = db.Column(db.BigInteger, nullable=False)
 
 
 class Holdings(db.Model):

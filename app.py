@@ -1,10 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
+from extensions import db
 import config
 
-# Define db then connect later
-db = SQLAlchemy()
 
 def create_app():
     # create and configure the app
@@ -16,20 +14,24 @@ def create_app():
         SQLALCHEMY_DATABASE_URI=config.SQLALCHEMY_DATABASE_URI
     )
 
-    # Connect to DB
-    db.init_app(_app)
+    register_extentions(_app)
+    register_blueprints(_app)
 
-    # Create Routes
+    return _app
+
+
+def register_blueprints(_app):
     # Holdings
     from api.v1.holding_api import holdings_bp
     _app.register_blueprint(holdings_bp)
 
     # Users
-    from api.v1.holding_api import users_bp
+    from api.v1.users_api import users_bp
     _app.register_blueprint(users_bp)
 
 
-    return _app
+def register_extentions(_app):
+    db.init_app(_app)
 
 
 app = create_app()
